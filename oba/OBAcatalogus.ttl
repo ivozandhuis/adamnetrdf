@@ -1,0 +1,104 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix edm: <http://www.europeana.eu/schemas/edm/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://data.bibliotheken.nl/doc/nbt/p09430744X> dc:identifier "|oba-catalogus|4123" ;
+    dc:subject "20e eeuw",
+        "Amsterdam",
+        "Geschiedenis" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C4123> .
+
+<http://data.bibliotheken.nl/doc/nbt/p167711229> dc:identifier "|oba-catalogus|411269" ;
+    dc:subject "Amsterdam",
+        "Fotoboeken" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C411269> .
+
+<http://data.bibliotheken.nl/doc/nbt/p168250195> dc:identifier "|oba-catalogus|181194" ;
+    dc:subject "Amsterdam",
+        "Fotoboeken" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C181194> .
+
+<http://data.bibliotheken.nl/doc/nbt/p189501014> dc:identifier "|oba-catalogus|3306" ;
+    dc:subject "19e eeuw",
+        "Amsterdam",
+        "Fotoboeken" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C3306> .
+
+<http://data.bibliotheken.nl/doc/nbt/p194109119> dc:identifier "|oba-catalogus|2999" ;
+    dc:subject "Amsterdam",
+        "Zegels" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C2999> .
+
+<http://data.bibliotheken.nl/doc/nbt/p227322096> dc:identifier "|oba-catalogus|2515" ;
+    dc:subject "!077976797!Amsterdam",
+        "Amsterdam",
+        "Gedichten" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C2515> .
+
+<http://data.bibliotheken.nl/doc/nbt/p264817346> dc:identifier "|oba-catalogus|585776" ;
+    dc:subject "!07805124X!Oorthuys",
+        "20e eeuw",
+        "Amsterdam",
+        "Fotoboeken",
+        "Oorthuys, Cas" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C585776> .
+
+<http://data.bibliotheken.nl/doc/nbt/p291256716> dc:identifier "|oba-catalogus|599754" ;
+    dc:subject "Amsterdam",
+        "Fotoboeken",
+        "Luchtfoto's" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C599754> .
+
+<http://data.bibliotheken.nl/doc/nbt/p354959123> dc:identifier "|oba-catalogus|1073572" ;
+    dc:subject "Amsterdam",
+        "Reisgidsen" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C1073572> .
+
+<http://data.bibliotheken.nl/doc/nbt/p355269813> dc:identifier "|oba-catalogus|1091291" ;
+    dc:subject "Amsterdam",
+        "Reisgidsen" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C1091291> .
+
+<http://data.bibliotheken.nl/doc/nbt/p372653529> dc:identifier "|oba-catalogus|1150982" ;
+    dc:subject "Amsterdam" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C1150982> .
+
+<http://data.bibliotheken.nl/doc/nbt/p372671306> dc:identifier "|oba-catalogus|1121013" ;
+    dc:subject "Amsterdam",
+        "Reisgidsen" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C1121013> .
+
+<http://data.bibliotheken.nl/doc/nbt/p376137916> dc:identifier "|oba-catalogus|1132185" ;
+    dc:subject "Amsterdam",
+        "Reisgidsen" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C1132185> .
+
+<http://data.bibliotheken.nl/doc/nbt/p393976920> dc:identifier "|oba-catalogus|1146633" ;
+    dc:subject "Amsterdam",
+        "Cultuurgeschiedenis",
+        "Reisgidsen" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C1146633> .
+
+<http://data.bibliotheken.nl/doc/nbt/p406603162> dc:identifier "|oba-catalogus|1161648" ;
+    dc:subject "Amsterdam",
+        "Reisgidsen" ;
+    dc:type "book" ;
+    edm:isShownAt <https://zoeken.oba.nl/detail/?itemid=%7Coba-catalogus%7C1161648> .
+
