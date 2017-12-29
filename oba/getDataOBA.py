@@ -3,21 +3,35 @@
 import urllib
 import rdflib
 from bs4 import BeautifulSoup
+import csv
+
+# You'll need an authorization to use the API ...
+key = "your_key_here"
 
 oba = rdflib.Graph()
-kb  = rdflib.Graph()
-dc  = rdflib.Namespace("http://purl.org/dc/elements/1.1/")
-edm = rdflib.Namespace("http://www.europeana.eu/schemas/edm/")
+nbt  = rdflib.Graph()
+
+dc   = rdflib.Namespace("http://purl.org/dc/elements/1.1/")
+edm  = rdflib.Namespace("http://www.europeana.eu/schemas/edm/")
+foaf = rdflib.Namespace("http://xmlns.com/foaf/0.1/")
 
 oba.bind("dc", dc)
 oba.bind("edm", edm)
+oba.bind("foaf", foaf)
 
+pages = 1000
 
-pages = 1
-errorlist = [] # contains all non-available uri's on data.bibliotheken.nl
+# set up outputfile in csv-format for non-existent PPN's
+outfile = open('errors.csv', 'w', newline='')
+fieldnames = ['uri', 'url', 'error']
+errors = csv.DictWriter(outfile, fieldnames=fieldnames)
+errors.writeheader()
 
-for p in range(1, pages+1):
-    requestUrl = "http://obaliquid.staging.aquabrowser.nl/api/v0/search/?q=amsterdam&authorization=2edf326f3037fb1b0d40867c43eaa108&page=" + str(p)
+for p in range(500, pages+1):
+    requestUrl = "http://obaliquid.staging.aquabrowser.nl/api/v0/search/" + \
+        "?q=amsterdam" + \
+        "&authorization=" + key + \
+        "&page=" + str(p)
     print(requestUrl) # debugging & progress
     reply = urllib.request.urlopen(requestUrl)
     soup = BeautifulSoup(reply, "lxml")
@@ -29,36 +43,85 @@ for p in range(1, pages+1):
         ppns       = result.find_all("ppn-id")
         identifier = result.find("id")
         subjects   = result.find_all("topical-subject")
+        summaries  = result.find_all("summary")
 
-        if identifier.text.startswith("|oba-catalogus|"): # check for publications in catalogue only
+        # check for publications in catalogue only
+        if identifier.text.startswith("|oba-catalogus|"):
+
             for ppn in ppns: # iterate through available ppn's
+                url  = "https://zoeken.oba.nl/detail/?itemid=" + \
+                    urllib.parse.quote(identifier.text)
                 uri = "http://data.bibliotheken.nl/doc/nbt/p" + ppn.text
-                b = rdflib.Graph()
-                result = b.parse(uri)
+                pic = "https://cover.biblion.nl/coverlist.dll" + \
+                    "?bibliotheek=oba&ppn=" + ppn.text
 
-                if len(b) > 0: # check if PPN uri exists
-                    kb = kb + b
+                print(uri) # debugging & progress
+
+                # check if PPN uri exists
+                b = rdflib.Graph()
+                error = {}
+                try:
+                    r = b.parse(uri)
+                except Exception as e:
+                    error['error'] = e
+                    error['url'] = url
+                    error['uri'] = uri
+                    errors.writerow(error)
+
+                if len(b) > 0: # mostly: no errors, but no graph either ...
+                    nbt = nbt + b
                     book = rdflib.URIRef(uri)
-                    url  = "https://zoeken.oba.nl/detail/?itemid=" + urllib.parse.quote(identifier.text)
                     url  = rdflib.URIRef(url)
-                    oba.add( (book, dc.type, rdflib.Literal("book")) )
+                    pic  = rdflib.URIRef(pic)
+
                     oba.add( (book, dc.identifier, rdflib.Literal(identifier.text)) )
                     oba.add( (book, edm.isShownAt, url) )
+                    oba.add( (book, foaf.depiction, pic) )
 
                     for subject in subjects:
                         oba.add( (book, dc.subject, rdflib.Literal(subject.text)) )
 
-                else: # if PPN uri does nog exist
-                    errorlist.append(uri)
+                    for summary in summaries:
+                        oba.add( (book, dc.description, rdflib.Literal(summary.text)) )
 
-# serialize and write to file
-s = oba.serialize(format='turtle')
-file = open("OBAcatalogus.ttl","wb")
-file.write(s)
-file.close()
+                else: # if no error was thrown, but graph was empty
+                    error['error'] = "empty graph"
+                    error['url'] = url
+                    error['uri'] = uri
+                    errors.writerow(error)
 
-# serialize and write to file
-s = kb.serialize(format='turtle')
-file = open("NBTinOBA.ttl","wb")
-file.write(s)
-file.close()
+    # write every x pages into a file
+    x = 50
+    if (p % x) == 0:
+        # serialize and write to file
+        nr = int(p/x)
+
+        s = oba.serialize(format='turtle')
+        filename = "OBAcat" + str(nr) + ".ttl"
+        file = open(filename,"wb")
+        file.write(s)
+        file.close()
+        oba = rdflib.Graph()
+        oba.bind("dc", dc)
+        oba.bind("edm", edm)
+        oba.bind("foaf", foaf)
+
+        s = nbt.serialize(format='turtle')
+        filename = "NBTinOBA" + str(nr) + ".ttl"
+        file = open(filename,"wb")
+        file.write(s)
+        file.close()
+        nbt = rdflib.Graph()
+
+if len(oba) > 0 and len(nbt) > 0:
+    s = oba.serialize(format='turtle')
+    filename = "OBAcat_rest.ttl"
+    file = open(filename,"wb")
+    file.write(s)
+    file.close()
+
+    s = nbt.serialize(format='turtle')
+    filename = "NBTinOBA_rest.ttl"
+    file = open(filename,"wb")
+    file.write(s)
+    file.close()
