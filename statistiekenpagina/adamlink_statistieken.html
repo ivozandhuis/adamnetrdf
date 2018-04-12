@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>AdamLink Statistieken</title>
+	<meta charset="utf-8" />
+
+</head>
+<body>
+
+<h1>Statistieken</h1>
+<h2>Aantal items en aantal verbindingen</h2>
+<p>Tabel 1: Overzicht van aantallen collectie-items per collectie en het aantal gerelateerde verbindingspunten</p>
+<p></p>
+<table border='1'>
+<tr>
+	<th>Collectie</th>
+	<th>Aantal items</th>
+	<th>... met vervaardiger</th>
+	<th>... met persoon</th>
+	<th>... met straat</th>
+	<th>... met gebouw</th>
+</tr>
+<tr>
+	<td>Beeldbank Stadsarchief</td>
+	<td id="saa_beeldbank_count"></td>
+	<td id="saa_beeldbank_personcreator"></td>
+	<td id="saa_beeldbank_personsubject"></td>
+	<td id="saa_beeldbank_streetsubject"></td>
+	<td id="saa_beeldbank_buildingsubject"></td>
+</tr>
+<tr>
+	<td>Collectie Amsterdam Museum</td>
+	<td id="am_collectie_count"></td>
+	<td id="am_collectie_personcreator"></td>
+	<td id="am_collectie_personsubject"></td>
+	<td id="am_collectie_streetsubject"></td>
+	<td id="am_collectie_buildingsubject"></td>
+</tr>
+<tr>
+	<td>Beeldbank IISG</td>
+	<td id="iisg_beeldbank_count"></td>
+	<td id="iisg_beeldbank_personcreator"></td>
+	<td id="iisg_beeldbank_personsubject"></td>
+	<td id="iisg_beeldbank_streetsubject"></td>
+	<td id="iisg_beeldbank_buildingsubject"></td>
+</tr>
+<tr>
+	<td>Collectie Openbare Bibliotheek Amsterdam</td>
+	<td id="oba_collectie_count"></td>
+	<td id="oba_collectie_personcreator"></td>
+	<td id="oba_collectie_personsubject"></td>
+	<td id="oba_collectie_streetsubject"></td>
+	<td id="oba_collectie_buildingsubject"></td>
+</tr>
+<tr>
+	<td>Beeldbank Universiteitsbibliotheek UvA</td>
+	<td id="uba_beeldbank_count"></td>
+	<td id="uba_beeldbank_personcreator"></td>
+	<td id="uba_beeldbank_personsubject"></td>
+	<td id="uba_beeldbank_streetsubject"></td>
+	<td id="uba_beeldbank_buildingsubject"></td>
+</tr>
+<tr>
+	<td>Rijksmuseum</td>
+	<td id="rm_collectie_count"></td>
+	<td id="rm_collectie_personcreator"></td>
+	<td id="rm_collectie_personsubject"></td>
+	<td id="rm_collectie_streetsubject"></td>
+	<td id="rm_collectie_buildingsubject"></td>
+</tr>
+<tr>
+	<td>Beeldbank Noord-Hollands Archief</td>
+	<td id="nha_beeldbank_count"></td>
+	<td id="nha_beeldbank_personcreator"></td>
+	<td id="nha_beeldbank_personsubject"></td>
+	<td id="nha_beeldbank_streetsubject"></td>
+	<td id="nha_beeldbank_buildingsubject"></td>
+</tr>
+
+</table>
+<p>Toelichting: nog niet alle datasets zijn in het "all" endpoint ingelezen en nog niet alle uri's zijn vertaald naar adamlinkuri's.</p>
+
+<hr/>
+<h2>Aantal verbindingspunten en hun gebruik</h2>
+<p>Tabel 2: Overzicht van aantallen verbindingspunten en hoeveel er zijn als verbindingspunt in gebruik zijn.</p>
+
+<table border="1">
+	<tr>
+    <th>Soort verbindingspunt</th>
+		<th>Aantal</th>
+		<th> ... waarvan gelinkt</th>
+	</tr>
+	<tr>
+		<td>Persoon (vervaardiger)</td>
+		<td id="person_creator_count"></td>
+		<td id="person_creator_linked"></td>
+  </tr>
+	<tr>
+		<td>Persoon (onderwerp)</td>
+		<td id="person_subject_count"></td>
+		<td id="person_subject_linked"></td>
+  </tr>
+  <tr>
+		<td>Straat (onderwerp)</td>
+		<td id="street_count"></td>
+		<td id="street_linked"></td>
+  </tr>
+	<tr>
+		<td>Gebouw (onderwerp)</td>
+		<td id="building_count"></td>
+		<td id="building_linked"></td>
+  </tr>
+</table>
+
+<p>Toelichting: nog niet alle datasets zijn in het "all" endpoint ingelezen en nog niet alle uri's zijn vertaald naar adamlinkuri's.</p>
+<hr/>
+<h2>Soorten objecten per collectie</h2>
+<p>Tabel 3: Overzicht van verschillende types per collectie</p>
+
+<table border='1'>
+<tr>
+	<th>Collectie</th>
+	<th>Foto</th>
+	<th>Prent</th>
+	<th>Schilderij</th>
+	<th>... </th>
+	<th>... </th>
+</tr>
+<tr>
+	<td>Beeldbank Stadsarchief</td>
+	<td id='saa_beeldbank_foto'></td>
+	<td id='saa_beeldbank_prent'></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>Collectie Amsterdam Museum</td>
+	<td id='am_collectie_foto'></td>
+	<td id='am_collectie_prent'></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>Beeldbank IISG</td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>Collectie Openbare Bibliotheek Amsterdam</td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>Beeldbank Universiteitsbibliotheek UvA</td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>Rijksmuseum</td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>Beeldbank Noord-Hollands Archief</td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
+</table>
+<p>Toelichting: dit werkt met de AAT. Niet alle objecten zijn nog met de AAT verbonden.</p>
+
+
+<script>
+
+function doSPARQL_WriteCell(cell, q) {
+	// SPARQL query must deliver one variable with name "count"
+	var sparqlQuery = q
+	var encodedQuery = encodeURIComponent(sparqlQuery);
+	var queryUrl = 'https://api.data.adamlink.nl/datasets/AdamNet/all/services/endpoint2/sparql?default-graph-uri=&query=' + encodedQuery + '&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
+
+	fetch(queryUrl)
+	.then((resp) => resp.json()) // transform the data into json
+		.then(function(data) {
+
+			d = data.results.bindings; // get the results
+			td = document.getElementById(cell);
+			console.log(d);
+			td.innerHTML = d[0]['count']['value'];
+	})
+
+	.catch(function(error) {
+			// if there is any error you will catch them here
+			console.log(error);
+	});
+}
+
+function writeSPARQL(cell, q) {
+	// writes SPARQL query $q in cell $cell, for testing purposes
+	td = document.getElementById(cell);
+	td.innerHTML = q;
+}
+
+/////////////////////////////
+// TABLE 1
+function fillRowTable1(id, collUri) {
+	var cell = id + '_count'
+	var sparqlQuery = `
+	PREFIX void: <http://rdfs.org/ns/void#>
+	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+		?item void:inDataset <${collUri}>.
+	}`;
+	doSPARQL_WriteCell(cell, sparqlQuery)
+
+	var cell = id + '_personsubject'
+	var sparqlQuery = `
+	PREFIX void: <http://rdfs.org/ns/void#>
+	PREFIX dc: <http://purl.org/dc/elements/1.1/>
+	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+		?item void:inDataset <${collUri}>.
+		?item dc:subject ?adamlinkuri.
+		FILTER REGEX(?adamlinkuri, "https://adamlink.nl/person/")
+	}`;
+	doSPARQL_WriteCell(cell, sparqlQuery)
+
+	var cell = id + '_personcreator'
+	var sparqlQuery = `
+	PREFIX void: <http://rdfs.org/ns/void#>
+	PREFIX dc: <http://purl.org/dc/elements/1.1/>
+	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+		?item void:inDataset <${collUri}>.
+		?item dc:creator ?adamlinkuri.
+		FILTER REGEX(?adamlinkuri, "https://adamlink.nl/person/")
+	}`;
+	doSPARQL_WriteCell(cell, sparqlQuery)
+
+	var cell = id + '_streetsubject'
+	var sparqlQuery = `
+	PREFIX void: <http://rdfs.org/ns/void#>
+	PREFIX dct: <http://purl.org/dc/terms/>
+	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+		?item void:inDataset <${collUri}>.
+		?item dct:spatial ?adamlinkuri.
+		FILTER REGEX(?adamlinkuri, "https://adamlink.nl/geo/street/")
+	}`;
+	doSPARQL_WriteCell(cell, sparqlQuery)
+
+	var cell = id + '_buildingsubject'
+	var sparqlQuery = `
+	PREFIX void: <http://rdfs.org/ns/void#>
+	PREFIX dct: <http://purl.org/dc/terms/>
+	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+		?item void:inDataset <${collUri}>.
+		?item dct:spatial ?adamlinkuri.
+		FILTER REGEX(?adamlinkuri, "https://adamlink.nl/geo/building/")
+	}`;
+	doSPARQL_WriteCell(cell, sparqlQuery)
+
+}
+
+fillRowTable1('saa_beeldbank', 'https://data.adamlink.nl/saa/beeldbank/')
+fillRowTable1('am_collectie', 'https://data.adamlink.nl/am/amcollect/')
+fillRowTable1('iisg_beeldbank', 'https://data.adamlink.nl/iisg/beeldbank/')
+fillRowTable1('oba_collectie', 'http://data.bibliotheken.nl/id/dataset/nbt')
+fillRowTable1('uba_beeldbank', 'https://data.adamlink.nl/uva/beeldbank')
+fillRowTable1('rm_collectie', 'https://data.adamlink.nl/rma/beeldbank/')
+fillRowTable1('nha_beeldbank', 'https://data.adamlink.nl/nharchief/beeldbank/')
+
+/////////////////////////////////
+// TABLE 2
+
+function fillRowTable2(id, type, property) {
+	var cell = id + '_count'
+	var sparqlQuery = `
+	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+	SELECT COUNT(DISTINCT ?adamlinkuri) AS ?count WHERE {
+	 ?adamlinkuri rdfs:label ?label.
+	 FILTER REGEX(?adamlinkuri, "${type}")
+	}`;
+	doSPARQL_WriteCell(cell, sparqlQuery)
+
+	var cell = id + '_linked'
+
+	var sparqlQuery = `
+	PREFIX dc: <http://purl.org/dc/elements/1.1/>
+	PREFIX dct: <http://purl.org/dc/terms/>
+	SELECT COUNT(DISTINCT ?adamlinkuri) AS ?count WHERE {
+	 ?item ${property} ?adamlinkuri.
+	 FILTER REGEX(?adamlinkuri, "${type}")
+	}`;
+	doSPARQL_WriteCell(cell, sparqlQuery)
+
+}
+
+fillRowTable2('street', 'https://adamlink.nl/geo/street/', 'dct:spatial')
+fillRowTable2('person_creator', 'https://adamlink.nl/person/', 'dc:creator')
+fillRowTable2('person_subject', 'https://adamlink.nl/person/', 'dc:subject')
+fillRowTable2('building', 'https://adamlink.nl/geo/building/', 'dct:spatial')
+
+/////////////////////////////
+// TABLE 3
+function fillRowTable3(id, collUri) {
+	var cell = id + '_foto'
+	var sparqlQuery = `
+	PREFIX dc: <http://purl.org/dc/elements/1.1/>
+	PREFIX void: <http://rdfs.org/ns/void#>
+	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+	  ?item dc:type <aat-foto> .
+		?item void:inDataset <${collUri}>.
+	}`;
+	doSPARQL_WriteCell(cell, sparqlQuery)
+
+	var cell = id + '_prent'
+	var sparqlQuery = `
+	PREFIX dc: <http://purl.org/dc/elements/1.1/>
+	PREFIX void: <http://rdfs.org/ns/void#>
+	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+	  ?item dc:type <aat-prent> .
+		?item void:inDataset <${collUri}>.
+	}`;
+	doSPARQL_WriteCell(cell, sparqlQuery)
+
+}
+
+fillRowTable3('saa_beeldbank', 'https://data.adamlink.nl/saa/beeldbank/')
+fillRowTable3('am_collectie', 'https://data.adamlink.nl/am/amcollect/')
+
+
+</script>
+
+
+
+</body>
+</html>

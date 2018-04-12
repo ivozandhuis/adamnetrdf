@@ -51,7 +51,7 @@ for p in range(500, pages+1):
             for ppn in ppns: # iterate through available ppn's
                 url  = "https://zoeken.oba.nl/detail/?itemid=" + \
                     urllib.parse.quote(identifier.text)
-                uri = "http://data.bibliotheken.nl/doc/nbt/p" + ppn.text
+                uri = "http://data.bibliotheken.nl/id/nbt/p" + ppn.text
                 pic = "https://cover.biblion.nl/coverlist.dll" + \
                     "?bibliotheek=oba&ppn=" + ppn.text
 

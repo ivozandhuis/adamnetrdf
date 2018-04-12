@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Statistieken</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:700" rel="stylesheet">
+
+	<style type="text/css">
+		body{
+			padding: 40px;
+			text-align: center;
+		}
+		h1{
+			font-family: "Nunito";
+		}
+		img{
+			height: 200px;
+			margin-right: 20px;
+			margin-bottom: 20px;
+			border:5px solid #000;
+		}
+	</style>
+
+
+
+</head>
+<body>
+
+<h1>Statistieken</h1>
+<table border='1'>
+<tr>
+	<th>Instelling</th>
+	<th>Aantal items</th>
+</tr>
+<tr>
+	<td>Beeldbank Stadsarchief</td>
+	<td id="saa_beeldbank_count"></td>
+</tr>
+<tr>
+	<td>Collectie Amsterdam Museum</td>
+	<td id="am_collectie_count"></td>
+</tr>
+<tr>
+	<td>Collectie Openbare Bibliotheek Amsterdam</td>
+	<td id="oba_collectie_count"></td>
+</tr>
+
+</table>
+
+
+
+
+<script>
+/////////////////////////
+// Beeldbank Stadsarchief
+	var sparqlQuery = `
+	PREFIX void: <http://rdfs.org/ns/void#>
+	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+	  ?item void:inDataset <https://data.adamlink.nl/saa/beeldbank/>.
+	}`;
+//		#  ?item void:inDataset <https://data.adamlink.nl/iisg/beeldbank/> .    # Collectie IISG - selectie Amsterdam
+//		#  ?item void:inDataset <https://data.adamlink.nl/??> .					# Collectie UB UvA  - selectie Amsterdam
+//		#  ?item void:inDataset <https://data.adamlink.nl/??> .					# Collectie Rijksmuseum - selectie Amsterdam
+//		#  ?item void:inDataset <https://data.adamlink.nl/??> .					# Collectie NH Archief - selectie Amsterdam
+
+	var encodedQuery = encodeURIComponent(sparqlQuery);
+
+	var queryUrl = 'https://api.data.adamlink.nl/datasets/AdamNet/all/services/endpoint/sparql?default-graph-uri=&query=' + encodedQuery + '&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
+
+	fetch(queryUrl)
+	.then((resp) => resp.json()) // transform the data into json
+  	.then(function(data) {
+
+			d = data.results.bindings; // get the results
+			td = document.getElementById('saa_beeldbank_count');
+			console.log(d);
+	    td.innerHTML = d[0]['count']['value'];
+	})
+
+	.catch(function(error) {
+			// if there is any error you will catch them here
+			console.log(error);
+	});
+
+/////////////
+// AMCollect
+	var sparqlQuery = `
+	PREFIX void: <http://rdfs.org/ns/void#>
+	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+    ?item void:inDataset <https://data.adamlink.nl/am/amcollect/>.
+	}`;
+
+	var encodedQuery = encodeURIComponent(sparqlQuery);
+
+	var queryUrl = 'https://api.data.adamlink.nl/datasets/AdamNet/all/services/endpoint/sparql?default-graph-uri=&query=' + encodedQuery + '&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
+
+	fetch(queryUrl)
+	.then((resp) => resp.json()) // transform the data into json
+  	.then(function(data) {
+
+			d = data.results.bindings; // get the results
+			td = document.getElementById('am_collectie_count');
+			console.log(d);
+	    td.innerHTML = d[0]['count']['value'];
+	})
+
+	.catch(function(error) {
+			// if there is any error you will catch them here
+			console.log(error);
+	});
+
+	/////////////
+	// OBA Amsterdam Collectie
+		var sparqlQuery = `
+		PREFIX void: <http://rdfs.org/ns/void#>
+		SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+      ?item void:inDataset <http://data.bibliotheken.nl/id/dataset/nbt>.
+		}`;
+
+		var encodedQuery = encodeURIComponent(sparqlQuery);
+
+		var queryUrl = 'https://api.data.adamlink.nl/datasets/AdamNet/all/services/endpoint/sparql?default-graph-uri=&query=' + encodedQuery + '&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
+
+		fetch(queryUrl)
+		.then((resp) => resp.json()) // transform the data into json
+	  	.then(function(data) {
+
+				d = data.results.bindings; // get the results
+				td = document.getElementById('oba_collectie_count');
+				console.log(d);
+		    td.innerHTML = d[0]['count']['value'];
+		})
+
+		.catch(function(error) {
+				// if there is any error you will catch them here
+				console.log(error);
+		});
+
+
+</script>
+
+
+
+</body>
+</html>

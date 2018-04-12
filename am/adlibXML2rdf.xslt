@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- adlibXML2rdf voor Amsterdam Museum data -->
-<!-- CC0 Ivo Zandhuis (http://ivozandhuis.nl) -->
-<!-- 20171222 -->
+<!-- CC0 Ivo Zandhuis (https://ivozandhuis.nl) -->
+<!-- 20180320 -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -11,9 +11,15 @@
   xmlns:dcterms="http://purl.org/dc/terms/"
   xmlns:edm="http://www.europeana.eu/schemas/edm/"
   xmlns:foaf="http://xmlns.com/foaf/0.1/"
-  xmlns:sem="http://semanticweb.cs.vu.nl/2009/11/sem/">
+  xmlns:sem="http://semanticweb.cs.vu.nl/2009/11/sem/"
+  xmlns:schema="http://schema.org/"
+  xmlns:void="http://rdfs.org/ns/void#"
+  xmlns:lido="http://www.lido-schema.org/"
+  >
 
   <xsl:output method="xml" indent="yes"/>
+
+  <xsl:strip-space elements="*"/>
 
   <xsl:variable name="collect">
     <xsl:text>http://hdl.handle.net/11259/collection.</xsl:text>
@@ -39,6 +45,7 @@
       <xsl:attribute name="rdf:about">
         <xsl:value-of select="concat($collect, priref)"/>
       </xsl:attribute>
+      <void:inDataset rdf:resource="https://data.adamlink.nl/am/amcollect/"></void:inDataset>
       <xsl:apply-templates select="object_number"/>
       <xsl:apply-templates select="title"/>
       <xsl:apply-templates select="maker"/>
@@ -46,10 +53,15 @@
       <xsl:apply-templates select="production.date.start"/>
       <xsl:apply-templates select="production.date.end"/>
       <xsl:apply-templates select="object_name"/>
+      <!--xsl:apply-templates select="material"/-->
       <xsl:apply-templates select="priref"/>
       <xsl:apply-templates select="reproduction"/>
       <xsl:apply-templates select="copyright"/>
-      <xsl:apply-templates select="content.subject"/>
+      <xsl:apply-templates select="content_subject"/>
+      <xsl:apply-templates select="association_subject"/>
+ 	    <xsl:apply-templates select="content.motif.general"/>
+      <xsl:apply-templates select="content_person"/>
+      <xsl:apply-templates select="association_person"/>
     </xsl:element>
   </xsl:template>
 
@@ -74,16 +86,131 @@
     </xsl:element>
   </xsl:template>
 
-  <!-- content.subject => dc:subject of dcterms:spatial-->
-  <!-- NB op dit moment weet ik zeker dat als er een url is, dan is het spatial.
-  In theorie kan ook bij andere onderwerpen een url zijn opgenomen.
-  In de toekomst daarom ombouwen zodat we zeker weten
-  dat alleen geo-dingen naar dcterms:spatial wordt gemapt. -->
-  <xsl:template match="content.subject">
+<!-- SUBJECT -->
+  <!-- content.subject => dc:subject -->
+
+  <xsl:template match="content_subject[node()]">
+    <xsl:variable name="tipe">
+      <xsl:value-of select="content.subject.type/value[@lang='neutral']"/>
+    </xsl:variable>
+    <xsl:apply-templates select="content.subject">
+      <xsl:with-param name="tipe" select="$tipe"/>
+    </xsl:apply-templates>
+  </xsl:template>
+
+  <xsl:template match="association_subject[node()]">
+    <xsl:variable name="tipe">
+      <xsl:value-of select="association.subject.type/value[@lang='neutral']"/>
+    </xsl:variable>
+    <xsl:apply-templates select="association.subject">
+      <xsl:with-param name="tipe" select="$tipe"/>
+    </xsl:apply-templates>
+  </xsl:template>
+
+  <xsl:template match="content.motif.general[node()] | association.subject[node()] | content.subject[node()]">
+    <xsl:param name="tipe" />
     <xsl:choose>
-      <xsl:when test="bronnen/link_url">
-        <xsl:apply-templates select="bronnen/link_url"/>
+      <xsl:when test="bronnen/link_url[node()]">
+        <xsl:apply-templates select="bronnen/link_url[node()]">
+          <xsl:with-param name="tipe" select="$tipe"/>
+        </xsl:apply-templates>
       </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="subject-zonder-uri">
+            <xsl:with-param name="tipe" select="$tipe" />
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:apply-templates select="broader_term[node()]">
+      <xsl:with-param name="tipe" select="$tipe"/>
+    </xsl:apply-templates>
+  </xsl:template>
+
+  <xsl:template match="broader_term[node()]">
+    <xsl:param name="tipe" />
+    <xsl:choose>
+      <xsl:when test="bronnen/link_url[node()]">
+        <xsl:apply-templates select="bronnen/link_url[node()]">
+          <xsl:with-param name="tipe" select="$tipe"/>
+        </xsl:apply-templates>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="subject-zonder-uri-broader_term">
+            <xsl:with-param name="tipe" select="$tipe" />
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!-- -->
+  <xsl:template match="content.subject/bronnen/link_url[node()] |
+                        content.motif.general/bronnen/link_url[node()] |
+                        association.subject/bronnen/link_url[node()] |
+                        broader_term/bronnen/link_url[node()]">
+    <xsl:param name="tipe" />
+    <xsl:choose>
+      <xsl:when test="$tipe = 'GEOKEYW'">
+        <xsl:element name="dcterms:spatial">
+          <xsl:element name="rdf:Description">
+            <xsl:attribute name="rdf:about">
+              <xsl:value-of select="normalize-space(.)"/>
+            </xsl:attribute>
+            <xsl:element name="rdfs:label">
+              <xsl:value-of select="ancestor::*[2]/term"/>
+            </xsl:element>
+          </xsl:element>
+        </xsl:element>
+      </xsl:when>
+      <!-- $tipe = PERSON komt niet voor: deze zit in content.person -->
+      <xsl:when test="$tipe = 'EVENT'">
+          <xsl:element name="dc:subject">
+            <xsl:element name="rdf:Description">
+              <xsl:element name="rdf:type">
+                <xsl:attribute name="rdf:resource">http://semanticweb.cs.vu.nl/2009/11/sem/Event</xsl:attribute>
+              </xsl:element>
+              <xsl:element name="rdfs:label">
+                <xsl:value-of select="ancestor::*[2]/term"/>
+              </xsl:element>
+            </xsl:element>
+          </xsl:element>
+       </xsl:when>
+        <xsl:otherwise>
+          <xsl:element name="dc:subject">
+            <xsl:element name="rdf:Description">
+              <xsl:attribute name="rdf:about">
+                <xsl:value-of select="normalize-space(.)"/>
+              </xsl:attribute>
+              <xsl:element name="rdfs:label">
+                <xsl:value-of select="ancestor::*[2]/term"/>
+              </xsl:element>
+            </xsl:element>
+          </xsl:element>
+        </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+<!-- -->
+  <xsl:template name="subject-zonder-uri">
+    <xsl:param name="tipe" />
+    <xsl:choose>
+      <xsl:when test="$tipe = 'GEOKEYW'">
+        <xsl:element name="dcterms:spatial">
+          <xsl:value-of select="term"/>
+        </xsl:element>
+       </xsl:when>
+       <!-- $tipe = PERSON komt niet voor: deze zit in content.person -->
+      <xsl:when test="$tipe = 'EVENT'">
+          <xsl:element name="dc:subject">
+            <xsl:element name="rdf:Description">
+              <xsl:element name="rdf:type">
+                <xsl:attribute name="rdf:resource">http://semanticweb.cs.vu.nl/2009/11/sem/Event</xsl:attribute>
+              </xsl:element>
+              <xsl:element name="rdfs:label">
+                <xsl:value-of select="term"/>
+              </xsl:element>
+            </xsl:element>
+          </xsl:element>
+        </xsl:when>
       <xsl:otherwise>
         <xsl:element name="dc:subject">
           <xsl:value-of select="term"/>
@@ -92,18 +219,51 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="content.subject/bronnen/link_url">
-    <xsl:element name="dcterms:spatial">
-      <xsl:element name="rdf:Description">
-        <xsl:attribute name="rdf:about">
-          <xsl:value-of select="normalize-space(.)"/>
-        </xsl:attribute>
-        <xsl:element name="rdfs:label">
-          <xsl:value-of select="ancestor::*[2]/term"/>
+  <xsl:template name="subject-zonder-uri-broader_term">
+    <xsl:param name="tipe" />
+    <xsl:choose>
+      <xsl:when test="$tipe = 'GEOKEYW'">
+        <xsl:element name="dcterms:spatial">
+          <xsl:value-of select="."/>
         </xsl:element>
-      </xsl:element>
-    </xsl:element>
+       </xsl:when>
+       <!-- $tipe = PERSON komt niet voor: deze zit in content.person -->
+        <xsl:when test="$tipe = 'EVENT'">
+          <xsl:element name="dc:subject">
+            <xsl:element name="rdf:Description">
+              <xsl:element name="rdf:type">
+                <xsl:attribute name="rdf:resource">http://semanticweb.cs.vu.nl/2009/11/sem/Event</xsl:attribute>
+              </xsl:element>
+              <xsl:element name="rdfs:label">
+                <xsl:value-of select="."/>
+              </xsl:element>
+            </xsl:element>
+          </xsl:element>
+        </xsl:when>
+      <xsl:otherwise>
+        <xsl:element name="dc:subject">
+          <xsl:value-of select="."/>
+        </xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
+<!-- content.person.name => dc:subject -->
+<xsl:template match="content_person[node()]">
+  <xsl:element name="dc:subject">
+    <xsl:attribute name="rdf:resource">
+      <xsl:value-of select="content.person.name.uri"/>
+    </xsl:attribute>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="association_person[node()]">
+  <xsl:element name="dc:subject">
+    <xsl:attribute name="rdf:resource">
+      <xsl:value-of select="association.person.uri"/>
+    </xsl:attribute>
+  </xsl:element>
+</xsl:template>
 
   <!-- copyright => dc:rights -->
   <xsl:template match="copyright">
@@ -139,41 +299,51 @@
 
   <!-- maker => dc:creator -->
   <!-- NB hoe modelleer ik creator_qualifier "naar"? -->
-  <xsl:template match="maker">
-    <xsl:apply-templates select="creator"/>
-  </xsl:template>
-
-  <xsl:template match="creator">
+  <xsl:template match="maker[node()]">
     <xsl:choose>
-      <xsl:when test="link_url">
-        <xsl:apply-templates select="link_url"/>
+      <xsl:when test="creator.qualifier[node()]">
+        <xsl:element name="dc:contributor">
+          <xsl:element name="rdf:Description">
+            <xsl:apply-templates select="creator.uri | creator.qualifier | creator.role"/>
+          </xsl:element>
+        </xsl:element>
       </xsl:when>
       <xsl:otherwise>
         <xsl:element name="dc:creator">
-          <xsl:value-of select="name"/>
+          <xsl:attribute name="rdf:resource">
+            <xsl:value-of select="creator.uri"/>
+          </xsl:attribute>
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="creator/link_url">
-    <xsl:element name="dc:creator">
-      <xsl:element name="rdf:Description">
-        <xsl:attribute name="rdf:about">
-          <xsl:value-of select="normalize-space(.)"/>
-        </xsl:attribute>
-        <xsl:element name="rdfs:label">
-          <xsl:value-of select="ancestor::*[1]/name"/>
-        </xsl:element>
-      </xsl:element>
+  <xsl:template match="creator.uri[node()]">
+    <xsl:element name="dc:contributor">
+      <xsl:attribute name="rdf:resource">
+        <xsl:value-of select="."/>
+      </xsl:attribute>
     </xsl:element>
   </xsl:template>
+
+  <xsl:template match="creator.role[node()]">
+    <xsl:element name="schema:roleName">
+      <xsl:value-of select="."/>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template match="creator.qualifier[node()]">
+    <xsl:element name="lido:attributionQualifierActor">
+      <xsl:value-of select="."/>
+    </xsl:element>
+  </xsl:template>
+
 
   <!-- object_name => dc:type -->
   <xsl:template match="object_name">
     <xsl:choose>
-      <xsl:when test="bronnen/link_url">
-        <xsl:apply-templates select="bronnen/link_url"/>
+      <xsl:when test="bronnen/link_url[node()]">
+        <xsl:apply-templates select="bronnen/link_url[node()]"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:element name="dc:type">
@@ -183,7 +353,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="object_name/bronnen/link_url">
+  <xsl:template match="object_name/bronnen/link_url[node()]">
     <xsl:element name="dc:type">
       <xsl:element name="rdf:Description">
         <xsl:attribute name="rdf:about">
@@ -265,17 +435,6 @@
         <xsl:value-of select="$imageValue2"/>
       </xsl:attribute>
     </xsl:element>
-
-    <!--xsl:choose>
-      <xsl:when test="contains($imageValue, '\')">
-        <xsl:value-of select="substring-before($imageValue, '\')"/>
-        <xsl:text>%5C</xsl:text>
-        <xsl:value-of select="substring-after($imageValue, '\')"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$imageValue"/>
-      </xsl:otherwise>
-    </xsl:choose-->
 
   </xsl:template>
 

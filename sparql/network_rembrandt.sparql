@@ -1,0 +1,102 @@
+# queries on ecartico-dataset to construct ecartico as network
+
+# CONSTRUCTING EDGELIST
+
+# find all male-to-female marriage relations
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <http://schema.org/>
+
+SELECT ?source ?target WHERE {
+  ?source schema:spouse ?target .
+  ?source schema:gender "male"@en
+	}
+
+# find all father-son relations
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <http://schema.org/>
+
+SELECT ?source ?target WHERE {
+  ?source schema:children ?target .
+  ?source schema:gender "male"@en .
+  ?target schema:gender "male"@en .
+	}
+
+# find all father-daughter relations
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <http://schema.org/>
+
+SELECT ?source ?target WHERE {
+  ?source schema:children ?target .
+  ?source schema:gender "male"@en .
+  ?target schema:gender "female"@en .
+	}
+
+# find all mother-son relations
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <http://schema.org/>
+
+SELECT ?source ?target WHERE {
+  ?source schema:children ?target .
+  ?source schema:gender "female"@en .
+  ?target schema:gender "male"@en .
+	}
+
+# find all mother-daughter relations
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <http://schema.org/>
+
+SELECT ?source ?target WHERE {
+  ?source schema:children ?target .
+  ?source schema:gender "female"@en .
+  ?target schema:gender "female"@en .
+	}
+
+# CONSTRUCTING VERTEXLIST
+# male
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <http://schema.org/>
+SELECT ?person ?name ?birth ?death WHERE {
+  ?person foaf:name ?name .
+  ?person schema:gender "male"@en .
+  ?person schema:birthDate ?birth .
+  ?person schema:deathDate ?death .
+	}
+
+
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <http://schema.org/>
+SELECT ?person ?name ?birth ?death WHERE {
+  ?person foaf:name ?name .
+  ?person schema:gender "male"@en .
+  ?person schema:birthDate ?birth .
+	FILTER NOT EXISTS { ?person  schema:deathDate  ?death }
+}
+
+
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <http://schema.org/>
+SELECT ?person ?name ?birth ?death WHERE {
+  ?person foaf:name ?name .
+  ?person schema:gender "male"@en .
+  ?person schema:deathDate ?death .
+	FILTER NOT EXISTS { ?person  schema:birthDate  ?birth }
+}
+
+
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <http://schema.org/>
+SELECT ?person ?name ?birth ?death WHERE {
+  	?person foaf:name ?name .
+  	?person schema:gender "male"@en .
+	FILTER NOT EXISTS {
+    	?person schema:birthDate ?birth .
+    	?person schema:deathDate ?death .
+  		}
+	}
+
+SELECT ?person ?name ?birth ?death WHERE {
+  ?person foaf:name ?name .
+  ?person schema:gender "female"@en .
+  ?person schema:birthDate ?birth .
+  ?person schema:deathDate ?death .
+	}
