@@ -5,188 +5,235 @@
 	<title>AdamLink Statistieken</title>
 	<meta charset="utf-8" />
 
+	<link rel="stylesheet" href="https://www.adamlink.nl/css/style.css" type="text/css">
 </head>
+
 <body>
+	<div id="titlebar"></div>
 
-<h1>Statistieken</h1>
-<h2>Aantal items en aantal verbindingen</h2>
-<p>Tabel 1: Overzicht van aantallen collectie-items per collectie en het aantal gerelateerde verbindingspunten</p>
-<p></p>
-<table border='1'>
-<tr>
-	<th>Collectie</th>
-	<th>Aantal items</th>
-	<th>... met vervaardiger</th>
-	<th>... met persoon</th>
-	<th>... met straat</th>
-	<th>... met gebouw</th>
-</tr>
-<tr>
-	<td>Beeldbank Stadsarchief</td>
-	<td id="saa_beeldbank_count"></td>
-	<td id="saa_beeldbank_personcreator"></td>
-	<td id="saa_beeldbank_personsubject"></td>
-	<td id="saa_beeldbank_streetsubject"></td>
-	<td id="saa_beeldbank_buildingsubject"></td>
-</tr>
-<tr>
-	<td>Collectie Amsterdam Museum</td>
-	<td id="am_collectie_count"></td>
-	<td id="am_collectie_personcreator"></td>
-	<td id="am_collectie_personsubject"></td>
-	<td id="am_collectie_streetsubject"></td>
-	<td id="am_collectie_buildingsubject"></td>
-</tr>
-<tr>
-	<td>Beeldbank IISG</td>
-	<td id="iisg_beeldbank_count"></td>
-	<td id="iisg_beeldbank_personcreator"></td>
-	<td id="iisg_beeldbank_personsubject"></td>
-	<td id="iisg_beeldbank_streetsubject"></td>
-	<td id="iisg_beeldbank_buildingsubject"></td>
-</tr>
-<tr>
-	<td>Collectie Openbare Bibliotheek Amsterdam</td>
-	<td id="oba_collectie_count"></td>
-	<td id="oba_collectie_personcreator"></td>
-	<td id="oba_collectie_personsubject"></td>
-	<td id="oba_collectie_streetsubject"></td>
-	<td id="oba_collectie_buildingsubject"></td>
-</tr>
-<tr>
-	<td>Beeldbank Universiteitsbibliotheek UvA</td>
-	<td id="uba_beeldbank_count"></td>
-	<td id="uba_beeldbank_personcreator"></td>
-	<td id="uba_beeldbank_personsubject"></td>
-	<td id="uba_beeldbank_streetsubject"></td>
-	<td id="uba_beeldbank_buildingsubject"></td>
-</tr>
-<tr>
-	<td>Rijksmuseum</td>
-	<td id="rm_collectie_count"></td>
-	<td id="rm_collectie_personcreator"></td>
-	<td id="rm_collectie_personsubject"></td>
-	<td id="rm_collectie_streetsubject"></td>
-	<td id="rm_collectie_buildingsubject"></td>
-</tr>
-<tr>
-	<td>Beeldbank Noord-Hollands Archief</td>
-	<td id="nha_beeldbank_count"></td>
-	<td id="nha_beeldbank_personcreator"></td>
-	<td id="nha_beeldbank_personsubject"></td>
-	<td id="nha_beeldbank_streetsubject"></td>
-	<td id="nha_beeldbank_buildingsubject"></td>
-</tr>
+	<div class="container" id="content">
 
-</table>
-<p>Toelichting: nog niet alle datasets zijn in het "all" endpoint ingelezen en nog niet alle uri's zijn vertaald naar adamlinkuri's.</p>
+		<div class="row">
+	        <div class="col-md-6">
+						<h1>AdamLink Statistieken</h1>
+						<h2>Aantal items en aantal verbindingen</h2>
+						<p>Tabel 1: Overzicht van aantallen collectie-items per collectie en het aantal gerelateerde verbindingspunten</p>
+						<p></p>
+						<table border='1'>
+						<tr>
+							<th>Collectie</th>
+							<th>Aantal items</th>
+							<th>... met afbeelding</th>
+							<th>... met vervaardiger</th>
+							<th>... met persoon</th>
+							<th>... met straat</th>
+							<th>... met gebouw</th>
+						</tr>
+						<tr>
+							<td>Beeldbank Stadsarchief</td>
+							<td id="saa_beeldbank_count"></td>
+							<td id="saa_beeldbank_img"></td>
+							<td id="saa_beeldbank_personcreator"></td>
+							<td id="saa_beeldbank_personsubject"></td>
+							<td id="saa_beeldbank_streetsubject"></td>
+							<td id="saa_beeldbank_buildingsubject"></td>
+						</tr>
+						<tr>
+							<td>Collectie Amsterdam Museum</td>
+							<td id="am_collectie_count"></td>
+							<td id="am_collectie_img"></td>
+							<td id="am_collectie_personcreator"></td>
+							<td id="am_collectie_personsubject"></td>
+							<td id="am_collectie_streetsubject"></td>
+							<td id="am_collectie_buildingsubject"></td>
+						</tr>
+						<tr>
+							<td>Beeldbank IISG</td>
+							<td id="iisg_beeldbank_count"></td>
+							<td id="iisg_beeldbank_img"></td>
+							<td id="iisg_beeldbank_personcreator"></td>
+							<td id="iisg_beeldbank_personsubject"></td>
+							<td id="iisg_beeldbank_streetsubject"></td>
+							<td id="iisg_beeldbank_buildingsubject"></td>
+						</tr>
+						<tr>
+							<td>Collectie Openbare Bibliotheek Amsterdam</td>
+							<td id="oba_collectie_count"></td>
+							<td id="oba_collectie_img"></td>
+							<td id="oba_collectie_personcreator"></td>
+							<td id="oba_collectie_personsubject"></td>
+							<td id="oba_collectie_streetsubject"></td>
+							<td id="oba_collectie_buildingsubject"></td>
+						</tr>
+						<tr>
+							<td>Kaarten Universiteitsbibliotheek UvA</td>
+							<td id="uba_maps_count"></td>
+							<td id="uba_maps_img"></td>
+							<td id="uba_maps_personcreator"></td>
+							<td id="uba_maps_personsubject"></td>
+							<td id="uba_maps_streetsubject"></td>
+							<td id="uba_maps_buildingsubject"></td>
+						</tr>
+						<tr>
+							<td>Portretten Universiteitsbibliotheek UvA</td>
+							<td id="uba_portret_count"></td>
+							<td id="uba_portret_img"></td>
+							<td id="uba_portret_personcreator"></td>
+							<td id="uba_portret_personsubject"></td>
+							<td id="uba_portret_streetsubject"></td>
+							<td id="uba_portret_buildingsubject"></td>
+						</tr>
+						<tr>
+							<td>Rijksmuseum</td>
+							<td id="rma_collectie_count"></td>
+							<td id="rma_collectie_img"></td>
+							<td id="rma_collectie_personcreator"></td>
+							<td id="rma_collectie_personsubject"></td>
+							<td id="rma_collectie_streetsubject"></td>
+							<td id="rma_collectie_buildingsubject"></td>
+						</tr>
+						<tr>
+							<td>Beeldbank Noord-Hollands Archief</td>
+							<td id="nha_beeldbank_count"></td>
+							<td id="nha_beeldbank_img"></td>
+							<td id="nha_beeldbank_personcreator"></td>
+							<td id="nha_beeldbank_personsubject"></td>
+							<td id="nha_beeldbank_streetsubject"></td>
+							<td id="nha_beeldbank_buildingsubject"></td>
+						</tr>
 
-<hr/>
-<h2>Aantal verbindingspunten en hun gebruik</h2>
-<p>Tabel 2: Overzicht van aantallen verbindingspunten en hoeveel er zijn als verbindingspunt in gebruik zijn.</p>
+						</table>
+						<p>Toelichting: De waarde is het aantal verschillende (DISTINCT) CH-objecten, met een of meer verbonden personen, straten of gebouwen.</p>
 
-<table border="1">
-	<tr>
-    <th>Soort verbindingspunt</th>
-		<th>Aantal</th>
-		<th> ... waarvan gelinkt</th>
-	</tr>
-	<tr>
-		<td>Persoon (vervaardiger)</td>
-		<td id="person_creator_count"></td>
-		<td id="person_creator_linked"></td>
-  </tr>
-	<tr>
-		<td>Persoon (onderwerp)</td>
-		<td id="person_subject_count"></td>
-		<td id="person_subject_linked"></td>
-  </tr>
-  <tr>
-		<td>Straat (onderwerp)</td>
-		<td id="street_count"></td>
-		<td id="street_linked"></td>
-  </tr>
-	<tr>
-		<td>Gebouw (onderwerp)</td>
-		<td id="building_count"></td>
-		<td id="building_linked"></td>
-  </tr>
-</table>
+						<hr/>
+						<h2>Aantal verbindingspunten en hun gebruik</h2>
+						<p>Tabel 2: Overzicht van aantallen verbindingspunten en hoeveel als verbindingspunt in gebruik zijn.</p>
 
-<p>Toelichting: nog niet alle datasets zijn in het "all" endpoint ingelezen en nog niet alle uri's zijn vertaald naar adamlinkuri's.</p>
-<hr/>
-<h2>Soorten objecten per collectie</h2>
-<p>Tabel 3: Overzicht van verschillende types per collectie</p>
+						<table border="1">
+							<tr>
+						    <th>Soort verbindingspunt</th>
+								<th>Aantal</th>
+								<th> ... waarvan gelinkt</th>
+							</tr>
+							<tr>
+								<td>Persoon (vervaardiger)</td>
+								<td id="person_creator_count"></td>
+								<td id="person_creator_linked"></td>
+						  </tr>
+							<tr>
+								<td>Persoon (onderwerp)</td>
+								<td id="person_subject_count"></td>
+								<td id="person_subject_linked"></td>
+						  </tr>
+						  <tr>
+								<td>Straat (onderwerp)</td>
+								<td id="street_count"></td>
+								<td id="street_linked"></td>
+						  </tr>
+							<tr>
+								<td>Gebouw (onderwerp)</td>
+								<td id="building_count"></td>
+								<td id="building_linked"></td>
+						  </tr>
+						</table>
 
-<table border='1'>
-<tr>
-	<th>Collectie</th>
-	<th>Foto</th>
-	<th>Prent</th>
-	<th>Schilderij</th>
-	<th>... </th>
-	<th>... </th>
-</tr>
-<tr>
-	<td>Beeldbank Stadsarchief</td>
-	<td id='saa_beeldbank_foto'></td>
-	<td id='saa_beeldbank_prent'></td>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>Collectie Amsterdam Museum</td>
-	<td id='am_collectie_foto'></td>
-	<td id='am_collectie_prent'></td>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>Beeldbank IISG</td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>Collectie Openbare Bibliotheek Amsterdam</td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>Beeldbank Universiteitsbibliotheek UvA</td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>Rijksmuseum</td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>Beeldbank Noord-Hollands Archief</td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
+						<p>Toelichting: De waarde is het aantal verschillende (DISTINCT) personen, straten of gebouwen, met een of meer verbonden CH-objecten.</p>
 
-</table>
-<p>Toelichting: dit werkt met de AAT. Niet alle objecten zijn nog met de AAT verbonden.</p>
+						<hr/>
+						<h2>Soorten objecten per collectie</h2>
+						<p>Tabel 3: Overzicht van verschillende types per collectie</p>
 
+						<table border='1'>
+						<tr>
+							<th>Collectie</th>
+							<th>Foto</th>
+							<th>Prent</th>
+							<th>Schilderij</th>
+							<th>Affiche</th>
+							<th>Boek</th>
+							<th>Kaart</th>
+						</tr>
+						<tr>
+							<td>Beeldbank Stadsarchief</td>
+							<td id='saa_beeldbank_foto'></td>
+							<td id='saa_beeldbank_prent'></td>
+							<td id='saa_beeldbank_schilderij'></td>
+							<td id='saa_beeldbank_affiche'></td>
+							<td id='saa_beeldbank_boek'></td>
+							<td id='saa_beeldbank_kaart'></td>
+						</tr>
+						<tr>
+							<td>Collectie Amsterdam Museum</td>
+							<td id='am_collectie_foto'></td>
+							<td id='am_collectie_prent'></td>
+							<td id='am_collectie_schilderij'></td>
+							<td id='am_collectie_affiche'></td>
+							<td id='am_collectie_boek'></td>
+							<td id='am_collectie_kaart'></td>
+						</tr>
+						<tr>
+							<td>Beeldbank IISG</td>
+							<td id='iisg_beeldbank_foto'></td>
+							<td id='iisg_beeldbank_prent'></td>
+							<td id='iisg_beeldbank_schilderij'></td>
+							<td id='iisg_beeldbank_affiche'></td>
+							<td id='iisg_beeldbank_boek'></td>
+							<td id='iisg_beeldbank_kaart'></td>
+						</tr>
+						<tr>
+							<td>Collectie Openbare Bibliotheek Amsterdam</td>
+							<td id='oba_collectie_foto'></td>
+							<td id='oba_collectie_prent'></td>
+							<td id='oba_collectie_schilderij'></td>
+							<td id='oba_collectie_affiche'></td>
+							<td id='oba_collectie_boek'></td>
+							<td id='oba_collectie_kaart'></td>
+						</tr>
+						<tr>
+							<td>Kaarten Universiteitsbibliotheek UvA</td>
+							<td id='uba_maps_foto'></td>
+							<td id='uba_maps_prent'></td>
+							<td id='uba_maps_schilderij'></td>
+							<td id='uba_maps_affiche'></td>
+							<td id='uba_maps_boek'></td>
+							<td id='uba_maps_kaart'></td>
+						</tr>
+						<tr>
+							<td>Portretten Universiteitsbibliotheek UvA</td>
+							<td id='uba_portret_foto'></td>
+							<td id='uba_portret_prent'></td>
+							<td id='uba_portret_schilderij'></td>
+							<td id='uba_portret_affiche'></td>
+							<td id='uba_portret_boek'></td>
+							<td id='uba_portret_kaart'></td>
+						</tr>
+						<tr>
+							<td>Rijksmuseum</td>
+							<td id='rma_collectie_foto'></td>
+							<td id='rma_collectie_prent'></td>
+							<td id='rma_collectie_schilderij'></td>
+							<td id='rma_collectie_affiche'></td>
+							<td id='rma_collectie_boek'></td>
+							<td id='rma_collectie_kaart'></td>
+						</tr>
+						<tr>
+							<td>Beeldbank Noord-Hollands Archief</td>
+							<td id='nha_beeldbank_foto'></td>
+							<td id='nha_beeldbank_prent'></td>
+							<td id='nha_beeldbank_schilderij'></td>
+							<td id='nha_beeldbank_affiche'></td>
+							<td id='nha_beeldbank_boek'></td>
+							<td id='nha_beeldbank_kaart'></td>
+						</tr>
+
+						</table>
+						<p>Toelichting: dit werkt met de AAT.</p>
+	        </div>
+		</div>
+
+<div class="footer">
+  	<img src="https://www.adamlink.nl/img/footerimg.jpg">
+</div>
 
 <script>
 
@@ -194,7 +241,7 @@ function doSPARQL_WriteCell(cell, q) {
 	// SPARQL query must deliver one variable with name "count"
 	var sparqlQuery = q
 	var encodedQuery = encodeURIComponent(sparqlQuery);
-	var queryUrl = 'https://api.data.adamlink.nl/datasets/AdamNet/all/services/endpoint2/sparql?default-graph-uri=&query=' + encodedQuery + '&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
+	var queryUrl = 'https://api.data.adamlink.nl/datasets/AdamNet/all/services/endpoint/sparql?default-graph-uri=&query=' + encodedQuery + '&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
 
 	fetch(queryUrl)
 	.then((resp) => resp.json()) // transform the data into json
@@ -221,11 +268,21 @@ function writeSPARQL(cell, q) {
 /////////////////////////////
 // TABLE 1
 function fillRowTable1(id, collUri) {
+
 	var cell = id + '_count'
 	var sparqlQuery = `
 	PREFIX void: <http://rdfs.org/ns/void#>
 	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
 		?item void:inDataset <${collUri}>.
+	}`;
+	doSPARQL_WriteCell(cell, sparqlQuery)
+
+	var cell = id + '_img'
+	var sparqlQuery = `
+	PREFIX void: <http://rdfs.org/ns/void#>
+	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+		?item void:inDataset <${collUri}>.
+		?item foaf:depiction ?img.
 	}`;
 	doSPARQL_WriteCell(cell, sparqlQuery)
 
@@ -279,8 +336,9 @@ fillRowTable1('saa_beeldbank', 'https://data.adamlink.nl/saa/beeldbank/')
 fillRowTable1('am_collectie', 'https://data.adamlink.nl/am/amcollect/')
 fillRowTable1('iisg_beeldbank', 'https://data.adamlink.nl/iisg/beeldbank/')
 fillRowTable1('oba_collectie', 'http://data.bibliotheken.nl/id/dataset/nbt')
-fillRowTable1('uba_beeldbank', 'https://data.adamlink.nl/uva/beeldbank')
-fillRowTable1('rm_collectie', 'https://data.adamlink.nl/rma/beeldbank/')
+fillRowTable1('uba_maps', 'https://data.adamlink.nl/uva/maps')
+fillRowTable1('uba_portre', '')
+fillRowTable1('rma_collectie', 'https://data.adamlink.nl/rma/beeldbank/')
 fillRowTable1('nha_beeldbank', 'https://data.adamlink.nl/nharchief/beeldbank/')
 
 /////////////////////////////////
@@ -322,7 +380,7 @@ function fillRowTable3(id, collUri) {
 	PREFIX dc: <http://purl.org/dc/elements/1.1/>
 	PREFIX void: <http://rdfs.org/ns/void#>
 	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
-	  ?item dc:type <aat-foto> .
+	  ?item dc:type <http://vocab.getty.edu/aat/300046300> .
 		?item void:inDataset <${collUri}>.
 	}`;
 	doSPARQL_WriteCell(cell, sparqlQuery)
@@ -332,7 +390,47 @@ function fillRowTable3(id, collUri) {
 	PREFIX dc: <http://purl.org/dc/elements/1.1/>
 	PREFIX void: <http://rdfs.org/ns/void#>
 	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
-	  ?item dc:type <aat-prent> .
+	  ?item dc:type <http://vocab.getty.edu/aat/300041273> .
+		?item void:inDataset <${collUri}>.
+	}`;
+	doSPARQL_WriteCell(cell, sparqlQuery)
+
+	var cell = id + '_schilderij'
+	var sparqlQuery = `
+	PREFIX dc: <http://purl.org/dc/elements/1.1/>
+	PREFIX void: <http://rdfs.org/ns/void#>
+	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+	  ?item dc:type <http://browser.aat-ned.nl/300177435> .
+		?item void:inDataset <${collUri}>.
+	}`;
+	doSPARQL_WriteCell(cell, sparqlQuery)
+
+	var cell = id + '_affiche'
+	var sparqlQuery = `
+	PREFIX dc: <http://purl.org/dc/elements/1.1/>
+	PREFIX void: <http://rdfs.org/ns/void#>
+	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+	  ?item dc:type <> .
+		?item void:inDataset <${collUri}>.
+	}`;
+	doSPARQL_WriteCell(cell, sparqlQuery)
+
+	var cell = id + '_boek'
+	var sparqlQuery = `
+	PREFIX dc: <http://purl.org/dc/elements/1.1/>
+	PREFIX void: <http://rdfs.org/ns/void#>
+	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+	  ?item dc:type <> .
+		?item void:inDataset <${collUri}>.
+	}`;
+	doSPARQL_WriteCell(cell, sparqlQuery)
+
+	var cell = id + '_kaart'
+	var sparqlQuery = `
+	PREFIX dc: <http://purl.org/dc/elements/1.1/>
+	PREFIX void: <http://rdfs.org/ns/void#>
+	SELECT COUNT(DISTINCT ?item) AS ?count WHERE {
+	  ?item dc:type <> .
 		?item void:inDataset <${collUri}>.
 	}`;
 	doSPARQL_WriteCell(cell, sparqlQuery)
@@ -341,6 +439,12 @@ function fillRowTable3(id, collUri) {
 
 fillRowTable3('saa_beeldbank', 'https://data.adamlink.nl/saa/beeldbank/')
 fillRowTable3('am_collectie', 'https://data.adamlink.nl/am/amcollect/')
+fillRowTable3('iisg_beeldbank', 'https://data.adamlink.nl/iisg/beeldbank/')
+fillRowTable3('oba_collectie', 'http://data.bibliotheken.nl/id/dataset/nbt')
+fillRowTable3('uba_maps', 'https://data.adamlink.nl/uva/maps')
+fillRowTable3('uba_portre', '')
+fillRowTable3('rma_collectie', 'https://data.adamlink.nl/rma/beeldbank/')
+fillRowTable3('nha_beeldbank', 'https://data.adamlink.nl/nharchief/beeldbank/')
 
 
 </script>

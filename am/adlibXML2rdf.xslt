@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- adlibXML2rdf voor Amsterdam Museum data -->
+<!-- adlibXML2rdf voor Amsterdam Museum collectiedata -->
 <!-- CC0 Ivo Zandhuis (https://ivozandhuis.nl) -->
-<!-- 20180320 -->
+<!-- 2018426 -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -15,15 +15,12 @@
   xmlns:schema="http://schema.org/"
   xmlns:void="http://rdfs.org/ns/void#"
   xmlns:lido="http://www.lido-schema.org/"
+  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
   >
 
   <xsl:output method="xml" indent="yes"/>
 
-  <xsl:strip-space elements="*"/>
-
-  <xsl:variable name="collect">
-    <xsl:text>http://hdl.handle.net/11259/collection.</xsl:text>
-  </xsl:variable>
+  <!--xsl:strip-space elements="*"/-->
 
   <!-- basic structure -->
   <xsl:template match="/">
@@ -41,20 +38,21 @@
   </xsl:template>
 
   <xsl:template match="record">
-    <xsl:element name="rdf:Description">
+    <xsl:element name="edm:providedCHO">
       <xsl:attribute name="rdf:about">
-        <xsl:value-of select="concat($collect, priref)"/>
+        <xsl:value-of select="persistent_ID"/>
       </xsl:attribute>
-      <void:inDataset rdf:resource="https://data.adamlink.nl/am/amcollect/"></void:inDataset>
+      <!--void:inDataset rdf:resource="https://data.adamlink.nl/am/amcollect/"></void:inDataset-->
       <xsl:apply-templates select="object_number"/>
-      <xsl:apply-templates select="title"/>
+      <xsl:apply-templates select="title[1]" mode="label"/>
+      <xsl:apply-templates select="title" mode="dc_title"/>
       <xsl:apply-templates select="maker"/>
       <xsl:apply-templates select="AHMteksten"/>
       <xsl:apply-templates select="production.date.start"/>
       <xsl:apply-templates select="production.date.end"/>
       <xsl:apply-templates select="object_name"/>
       <!--xsl:apply-templates select="material"/-->
-      <xsl:apply-templates select="priref"/>
+      <xsl:apply-templates select="persistent_ID"/>
       <xsl:apply-templates select="reproduction"/>
       <xsl:apply-templates select="copyright"/>
       <xsl:apply-templates select="content_subject"/>
@@ -66,6 +64,16 @@
   </xsl:template>
 
   <!-- matching elements -->
+
+  <!-- persistent_ID => uri  -->
+  <xsl:template match="persistent_ID">
+    <xsl:element name="edm:isShownAt">
+      <xsl:attribute name="rdf:resource">
+        <xsl:value-of select="."/>
+      </xsl:attribute>
+    </xsl:element>
+  </xsl:template>
+
   <!-- AHMteksten => dc:description -->
   <xsl:template match="AHMteksten">
     <xsl:element name="dc:description">
@@ -155,7 +163,7 @@
             <xsl:attribute name="rdf:about">
               <xsl:value-of select="normalize-space(.)"/>
             </xsl:attribute>
-            <xsl:element name="rdfs:label">
+            <xsl:element name="skos:altLabel">
               <xsl:value-of select="ancestor::*[2]/term"/>
             </xsl:element>
           </xsl:element>
@@ -168,7 +176,7 @@
               <xsl:element name="rdf:type">
                 <xsl:attribute name="rdf:resource">http://semanticweb.cs.vu.nl/2009/11/sem/Event</xsl:attribute>
               </xsl:element>
-              <xsl:element name="rdfs:label">
+              <xsl:element name="skos:altLabel">
                 <xsl:value-of select="ancestor::*[2]/term"/>
               </xsl:element>
             </xsl:element>
@@ -180,7 +188,7 @@
               <xsl:attribute name="rdf:about">
                 <xsl:value-of select="normalize-space(.)"/>
               </xsl:attribute>
-              <xsl:element name="rdfs:label">
+              <xsl:element name="skos:altLabel">
                 <xsl:value-of select="ancestor::*[2]/term"/>
               </xsl:element>
             </xsl:element>
@@ -205,7 +213,7 @@
               <xsl:element name="rdf:type">
                 <xsl:attribute name="rdf:resource">http://semanticweb.cs.vu.nl/2009/11/sem/Event</xsl:attribute>
               </xsl:element>
-              <xsl:element name="rdfs:label">
+              <xsl:element name="skos:altLabel">
                 <xsl:value-of select="term"/>
               </xsl:element>
             </xsl:element>
@@ -234,7 +242,7 @@
               <xsl:element name="rdf:type">
                 <xsl:attribute name="rdf:resource">http://semanticweb.cs.vu.nl/2009/11/sem/Event</xsl:attribute>
               </xsl:element>
-              <xsl:element name="rdfs:label">
+              <xsl:element name="skos:altLabel">
                 <xsl:value-of select="."/>
               </xsl:element>
             </xsl:element>
@@ -301,8 +309,8 @@
   <!-- NB hoe modelleer ik creator_qualifier "naar"? -->
   <xsl:template match="maker[node()]">
     <xsl:choose>
-      <xsl:when test="creator.qualifier[node()]">
-        <xsl:element name="dc:contributor">
+      <xsl:when test="creator.qualifier[node()] | creator.role[node()]">
+        <xsl:element name="dc:creator">
           <xsl:element name="rdf:Description">
             <xsl:apply-templates select="creator.uri | creator.qualifier | creator.role"/>
           </xsl:element>
@@ -319,7 +327,7 @@
   </xsl:template>
 
   <xsl:template match="creator.uri[node()]">
-    <xsl:element name="dc:contributor">
+    <xsl:element name="dc:creator">
       <xsl:attribute name="rdf:resource">
         <xsl:value-of select="."/>
       </xsl:attribute>
@@ -359,7 +367,7 @@
         <xsl:attribute name="rdf:about">
           <xsl:value-of select="normalize-space(.)"/>
         </xsl:attribute>
-        <xsl:element name="rdfs:label">
+        <xsl:element name="skos:altLabel">
           <xsl:value-of select="ancestor::*[2]/term"/>
         </xsl:element>
       </xsl:element>
@@ -370,15 +378,6 @@
   <xsl:template match="object_number">
     <xsl:element name="dc:identifier">
       <xsl:value-of select="."/>
-    </xsl:element>
-  </xsl:template>
-
-  <!-- priref => edm:isShownAt -->
-  <xsl:template match="priref">
-    <xsl:element name="edm:isShownAt">
-      <xsl:attribute name="rdf:resource">
-        <xsl:value-of select="concat($collect, text())"/>
-      </xsl:attribute>
     </xsl:element>
   </xsl:template>
 
@@ -439,8 +438,14 @@
   </xsl:template>
 
   <!-- title => dc:title -->
-  <xsl:template match="title">
+  <xsl:template match="title" mode="dc_title">
     <xsl:element name="dc:title">
+      <xsl:value-of select="."/>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template match="title" mode="label">
+    <xsl:element name="rdfs:label">
       <xsl:value-of select="."/>
     </xsl:element>
   </xsl:template>

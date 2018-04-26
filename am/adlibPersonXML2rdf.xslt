@@ -43,7 +43,7 @@
       <xsl:attribute name="rdf:about">
         <xsl:value-of select="concat($collect, priref)"/>
       </xsl:attribute>
-      <void:inDataset rdf:resource="https://data.adamlink.nl/am/amperson/"></void:inDataset>
+      <!--void:inDataset rdf:resource="https://data.adamlink.nl/am/amperson/"></void:inDataset-->
       <xsl:apply-templates select="name"/>
       <xsl:apply-templates select="name.type"/>
       <xsl:apply-templates select="link_url"/>

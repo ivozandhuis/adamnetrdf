@@ -9,7 +9,7 @@ xslt = etree.parse("adlibXML2rdf.xslt")
 transform = etree.XSLT(xslt)
 
 # initialize variables for loop
-page = 71
+page = 0
 numberFound = 1000000
 numberShow = 100
 
@@ -25,17 +25,17 @@ while (numberFound > (page * numberShow)):
     # read numberFound
     hits = dom.find(".//hits")
     numberFound = int(hits.text)
-#    numberFound = 100 # by overwriting you can shortcut for testing
+#    numberFound = 500 # by overwriting you can shortcut for testing
 
     # transform into RDF/XML
     newdom = transform(dom)
     rdfxml = etree.tostring(newdom, pretty_print=True)
 
     # write rdfxml-file
-    filename = "am" + str(page) + ".rdf.xml"
-    f = open(filename,"wb")
-    f.write(rdfxml)
-    f.close()
+#    filename = "am" + str(page) + ".rdf.xml"
+#    f = open(filename,"wb")
+#    f.write(rdfxml)
+#    f.close()
 
     # read into rdf-graph object and serialize as turtle
     g = rdflib.Graph()
@@ -43,7 +43,7 @@ while (numberFound > (page * numberShow)):
     s = g.serialize(format='turtle')
 
     # write turtle-file
-    filename = "am" + str(page) + ".ttl"
+    filename = "am" + str(page) + ".org.ttl"
     f = open(filename,"wb")
     f.write(s)
     f.close()
